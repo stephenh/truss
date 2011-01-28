@@ -13,6 +13,7 @@ import org.bindgen.Binding;
 
 public class SessionVariable<T> implements Binding<T> {
 
+  private static final long serialVersionUID = 1L;
   private final Class<T> type;
   private final String name;
   private Class<? extends Page> redirectIfUnset;
@@ -35,6 +36,7 @@ public class SessionVariable<T> implements Binding<T> {
     return this;
   }
 
+  @Override
   public T get() {
     String valueAsString = (String) getSession(this.name);
     if (valueAsString == null) {
@@ -51,6 +53,7 @@ public class SessionVariable<T> implements Binding<T> {
     return value;
   }
 
+  @Override
   public void set(T value) {
     String valueAsString = CurrentContext.get().getWebConfig().getUrlConverterRegistry().convert(value, String.class);
     setSession(this.name, valueAsString);
@@ -97,6 +100,11 @@ public class SessionVariable<T> implements Binding<T> {
   @Override
   public T getSafely() {
     return this.get();
+  }
+
+  @Override
+  public boolean getBindingIsReadOnly() {
+    return false;
   }
 
 }

@@ -1,22 +1,20 @@
 <ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
-	<info organisation="truss" module="truss" revision="${truss.version}"/>
+	<info organisation="org.exigencecorp.truss" module="truss" revision="${truss.version}"/>
 	<configurations>
-		<conf name="default"/>
+		<conf name="default" extends="compile"/>
 		<conf name="sources"/>
-		<conf name="test" extends="default" visibility="private"/>
+		<conf name="compile" visibility="private"/>
+		<conf name="test" visibility="private"/>
 		<conf name="provided" visibility="private"/>
 	</configurations>
-	<publications>
-		<artifact type="pom" ext="pom" conf="default"/>
-		<artifact type="jar" ext="jar" conf="default"/>
-		<artifact type="source" ext="jar" conf="sources"/>
-	</publications>
-	<dependencies defaultconfmapping="%->default,sources()">
-		<dependency org="joist" name="joist-util" rev="0.5" conf="default"/>
-		<dependency org="commons-lang" name="commons-lang" rev="2.4" conf="default"/>
-		<dependency org="org.bindgen" name="bindgen" rev="2.15" conf="default"/>
-		<dependency org="org.apache.velocity" name="velocity" rev="1.6.4" conf="default"/>
-		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.5.8" conf="default"/><!-- velocity barfs without some sort of logging -->
+	<dependencies defaultconfmapping="%->default;sources->sources()">
+		<dependency org="joist" name="joist-util" rev="0.5" conf="compile"/>
+		<dependency org="commons-lang" name="commons-lang" rev="2.4" conf="compile"/>
+		<dependency org="org.bindgen" name="bindgen" rev="2.21" conf="compile"/>
+		<dependency org="org.apache.velocity" name="velocity" rev="1.6.4" conf="compile"/>
+
+		<!-- velocity barfs without some sort of logging -->
+		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.5.8" conf="compile"/>
 
 		<dependency org="javax.servlet" name="servlet-api" rev="2.4" conf="provided"/>
 

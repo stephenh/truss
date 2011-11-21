@@ -14,6 +14,7 @@ define 'truss' do
   project.version = VERSION_NUMBER
   project.group = 'org.exigencecorp.truss'
   ivy.compile_conf(['compile', 'provided']).test_conf('test')
+  test.resources.from(_('src/test/java'))
 
   package_with_sources
 

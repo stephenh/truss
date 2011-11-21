@@ -5,14 +5,15 @@ import java.util.List;
 
 import joist.util.Inflector;
 import joist.util.Join;
-import joist.util.Log;
 import joist.web.AbstractControl;
 import joist.web.CurrentContext;
 import joist.web.WebContext;
 import joist.web.util.HtmlWriter;
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang.StringUtils;
 
+@Slf4j
 public class Form extends AbstractControl<Form> {
 
   private final List<Field> fields = new ArrayList<Field>();
@@ -29,7 +30,7 @@ public class Form extends AbstractControl<Form> {
     // we're not "POSTing"--spreads out the logic, but I think it would be cleaner
     String submittedFormName = this.getContext().getRequest().getParameter("_formId");
     if (submittedFormName == null || !StringUtils.equals(this.getId(), submittedFormName)) {
-      Log.trace("{} != {}, skipping onProcess", submittedFormName, this.getId());
+      log.trace("{} != {}, skipping onProcess", submittedFormName, this.getId());
       return;
     }
     for (Field field : this.fields) {

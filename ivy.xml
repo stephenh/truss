@@ -8,10 +8,12 @@
 		<conf name="provided" visibility="private"/>
 	</configurations>
 	<dependencies defaultconfmapping="%->default;sources->sources()">
-		<dependency org="joist" name="joist-util" rev="0.5" conf="compile"/>
+		<dependency org="joist" name="joist-util" rev="1.0.1" conf="compile"/>
 		<dependency org="commons-lang" name="commons-lang" rev="2.4" conf="compile"/>
 		<dependency org="org.bindgen" name="bindgen" rev="2.21" conf="compile"/>
 		<dependency org="org.apache.velocity" name="velocity" rev="1.6.4" conf="compile"/>
+
+		<dependency org="org.projectlombok" name="lombok" rev="0.10.2" conf="provided"/>
 
 		<!-- velocity barfs without some sort of logging -->
 		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.5.8" conf="compile"/>

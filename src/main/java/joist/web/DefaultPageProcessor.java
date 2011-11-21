@@ -6,11 +6,12 @@ import java.io.Writer;
 import java.lang.reflect.Field;
 import java.util.Map.Entry;
 
-import joist.util.Log;
 import joist.util.Reflection;
 import joist.web.exceptions.IoException;
 import joist.web.util.HtmlWriter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DefaultPageProcessor implements PageProcessor {
 
   public static final PageProcessor INSTANCE = new DefaultPageProcessor();
@@ -43,36 +44,36 @@ public class DefaultPageProcessor implements PageProcessor {
       if (value != null) {
         Object converted = this.getContext().getWebConfig().getUrlConverterRegistry().convert(value, field.getType());
         if (page.isAllowedViaUrl(converted)) {
-          Log.trace("Setting {}.{} to {}", page, field.getName(), value);
+          log.trace("Setting {} to {}", page + "." + field.getName(), value);
           Reflection.set(field, page, converted);
         } else {
-          Log.trace("Skipping {}.{} to {}", page, field.getName(), value);
+          log.trace("Skipping {} to {}", page + "." + field.getName(), value);
         }
       }
     }
   }
 
   public void doOnInit(Page page) {
-    Log.trace("Calling onInit on {}", page);
+    log.trace("Calling onInit on {}", page);
     page.onInit();
   }
 
   public void doAddOrphanControlsToPage(Page page) {
     for (Control c : CurrentContext.get().getAllControls()) {
       if (c.getParent() == null && c != page) {
-        Log.trace("Adding orphan control {} to page {}", c, page);
+        log.trace("Adding orphan control {} to page {}", c, page);
         page.addControl(c);
       }
     }
   }
 
   public void doProcess(Page page) {
-    Log.trace("Calling doProcess on {}", page);
+    log.trace("Calling doProcess on {}", page);
     page.onProcess();
   }
 
   public void doOnRender(Page page) {
-    Log.trace("Calling onRender on {}", page);
+    log.trace("Calling onRender on {}", page);
     page.onRender();
   }
 
@@ -97,7 +98,7 @@ public class DefaultPageProcessor implements PageProcessor {
 
   public void doAddAllControlsToModel(Page page) {
     for (Control c : CurrentContext.get().getAllControls()) {
-      Log.trace("Adding control {} to model", c.getFullId());
+      log.trace("Adding control {} to model", c.getFullId());
       CurrentContext.get().getModel().put(c.getFullId(), c);
     }
   }
@@ -106,7 +107,7 @@ public class DefaultPageProcessor implements PageProcessor {
     for (Field field : page.getClass().getFields()) {
       Object value = Reflection.get(field, page);
       if (value != null) {
-        Log.trace("Adding field {} to model", field.getName());
+        log.trace("Adding field {} to model", field.getName());
         CurrentContext.get().getModel().put(field.getName(), value);
       }
     }

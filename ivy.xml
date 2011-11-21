@@ -14,12 +14,9 @@
 		<dependency org="org.apache.velocity" name="velocity" rev="1.6.4" conf="compile"/>
 
 		<dependency org="org.projectlombok" name="lombok" rev="0.10.2" conf="provided"/>
-
-		<!-- velocity barfs without some sort of logging -->
-		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.5.8" conf="compile"/>
-
 		<dependency org="javax.servlet" name="servlet-api" rev="2.4" conf="provided"/>
 
 		<dependency org="junit" name="junit" rev="3.8.2" conf="test"/>
+		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.1" conf="test"/>
 	</dependencies>
 </ivy-module>
